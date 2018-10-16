@@ -1,0 +1,30 @@
+{
+  "name": "arca_rest_api",
+  "version": "0.0.1",
+  "description": "Web Server Rest API that retrieve data from ARCA",
+  "main": "server.js",
+  "scripts": {
+    "build": "tsc",
+    "dev": "nodemon",
+    "start": "ts-node --inspect=5858 src/server.ts",
+    "prod": "npm run build && npm run start"
+  },
+  "private": true,
+  "author": "Luca Ciotti",
+  "license": "ISC",
+  "dependencies": {
+    "@types/express": "^4.16.0",
+    "@types/request": "^2.47.1",
+    "body-parser": "^1.18.3",
+    "express": "^4.16.3",
+    "lodash": "^4.17.11",
+    "node-adodb": "^4.2.2",
+    "request": "^2.87.0",
+    "typescript-collections": "^1.3.2"
+  },
+  "devDependencies": {
+    "@types/morgan": "^1.7.35",
+    "morgan": "^1.9.0",
+    "nodemon": "^1.18.3"
+  }
+}
