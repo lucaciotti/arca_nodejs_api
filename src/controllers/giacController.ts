@@ -17,17 +17,22 @@ export class GiacController {
         if (!columnString) {
             columnString = '*';
         }
-        columnString = columnString + ', (giacini+progqtacar+progqtaret-progqtasca) as esistenza';
+        columnString = columnString + ', (giacini+progqtacar+progqtaret-progqtasca) as esistenza, magana.descrizion as magdesc, magart.unmisura';
 
         let whereString: String = 'esercizio="' + esercizio + '" AND ALLTRIM(articolo)="' + codart + '" ';
         if (codmag) whereString = whereString + ' AND ALLTRIM(magazzino)="' + codmag + '"';
         if (onlyGiac) whereString = whereString + ' AND (giacini+progqtacar+progqtaret-progqtasca)<>0';
 
+        let query = 'SELECT ' + columnString + ' FROM maggiac ' +
+                        'INNER JOIN magana on magana.codice==maggiac.magazzino ' +
+                        'INNER JOIN magart on ALLTRIM(magart.codice)==ALLTRIM(maggiac.articolo) ' +
+                        'WHERE ' + whereString + ' ORDER BY magazzino';
+
         connection
-            .query('SELECT ' + columnString + ' FROM maggiac WHERE ' + whereString +' ORDER BY magazzino')
+            .query(query)
             .then(data => {
                 // console.log(JSON.stringify(data, null, 2));
-                res.json(data);
+                res.json({ success: data});
             })
             .catch(error => {
                 console.log(error);
@@ -56,7 +61,7 @@ export class GiacController {
             .query('SELECT ' + columnString + ' FROM maggiac WHERE ' + whereString + ' ORDER BY articolo')
             .then(data => {
                 // console.log(JSON.stringify(data, null, 2));
-                res.json(data);
+                res.json({ success: data});
             })
             .catch(error => {
                 console.log(error);
@@ -85,7 +90,7 @@ export class GiacController {
             .query('SELECT ' + columnString + ' FROM maggiacl WHERE ' + whereString + 'ORDER BY lotto')
             .then(data => {
                 // console.log(JSON.stringify(data, null, 2));
-                res.json(data);
+                res.json({ success: data});
             })
             .catch(error => {
                 console.log(error);

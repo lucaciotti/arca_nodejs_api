@@ -23,7 +23,7 @@ export class DocsController {
             .query('SELECT '+columnString+' FROM doctes WHERE '+whereString)
             .then(data => {
                 // console.log(JSON.stringify(data, null, 2));
-                res.json(data);
+                res.json({ success: data});
             })
             .catch(error => {
                 console.log(error);
@@ -43,7 +43,7 @@ export class DocsController {
             .query('SELECT ' + columnString + ' FROM doctes WHERE id=' + id)
             .then(data => {
                 // console.log(JSON.stringify(data, null, 2));
-                res.json(data);
+                res.json({ success: data});
             })
             .catch(error => {
                 console.log(error);
@@ -68,7 +68,7 @@ export class DocsController {
             .query('SELECT ' + columnString + ' FROM docrig WHERE ' + whereString)
             .then(data => {
                 // console.log(JSON.stringify(data, null, 2));
-                res.json(data);
+                res.json({ success: data});
             })
             .catch(error => {
                 console.log(error);
@@ -88,7 +88,7 @@ export class DocsController {
             .query('SELECT ' + columnString + ' FROM docrig WHERE id=' + id)
             .then(data => {
                 // console.log(JSON.stringify(data, null, 2));
-                res.json(data);
+                res.json({ success: data});
             })
             .catch(error => {
                 console.log(error);
@@ -108,7 +108,7 @@ export class DocsController {
             .query('SELECT ' + columnString + ' FROM docrig WHERE id_testa=' + id)
             .then(data => {
                 // console.log(JSON.stringify(data, null, 2));
-                res.json(data);
+                res.json({ success: data});
             })
             .catch(error => {
                 console.log(error);
