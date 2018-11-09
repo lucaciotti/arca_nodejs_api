@@ -1,0 +1,9 @@
+{
+    "Server": {
+        "host": "172.16.2.9",
+        "port": 3018
+    },
+    "Arca": {
+        "connectionString": "'Provider=vfpoledb.1;Data Source=d:\\arca\\arca\\arca_italia\\ditte\\krona\\private.dbc;Collating Sequence=Machine'"
+    }
+}

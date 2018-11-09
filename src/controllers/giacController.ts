@@ -1,8 +1,8 @@
 import { Request, Response } from 'express';
-import { appConst } from './../appConst';
 import ADODB = require('node-adodb');
+import { storedConfig } from '../appConfig/storedConfig';
 
-const connection = ADODB.open(appConst.connectionString);
+const connection = ADODB.open(storedConfig.connectionString);
 
 export class GiacController {
 
@@ -15,7 +15,7 @@ export class GiacController {
         let onlyGiac: String = req.query.onlygiac;
         
         if (!columnString) {
-            columnString = '*';
+            columnString = 'maggiac.*';
         }
         columnString = columnString + ', (giacini+progqtacar+progqtaret-progqtasca) as esistenza, magana.descrizion as magdesc, magart.unmisura';
 
@@ -49,7 +49,7 @@ export class GiacController {
         let onlyGiac: String = req.query.onlygiac;
 
         if (!columnString) {
-            columnString = '*';
+            columnString = 'maggiac.*';
         }
         columnString = columnString + ', (giacini+progqtacar+progqtaret-progqtasca) as esistenza';
 
@@ -78,7 +78,7 @@ export class GiacController {
         let onlyGiac: String = req.query.onlygiac;
 
         if (!columnString) {
-            columnString = '*';
+            columnString = 'maggiac.*';
         }
         columnString = columnString + ', (progqtacar+progqtaret-progqtasca) as esistenza';
 

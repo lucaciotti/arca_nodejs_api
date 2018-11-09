@@ -1,8 +1,8 @@
-import { appConst } from './../appConst';
 import { Request, Response } from 'express';
 import ADODB = require('node-adodb');
+import { storedConfig } from '../appConfig/storedConfig';
 
-const connection = ADODB.open(appConst.connectionString);
+const connection = ADODB.open(storedConfig.connectionString);
 
 export class DocsController {
 

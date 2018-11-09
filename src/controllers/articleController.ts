@@ -1,8 +1,8 @@
-import { appConst } from './../appConst';
 import { Request, Response } from 'express';
 import ADODB = require('node-adodb');
+import { storedConfig } from '../appConfig/storedConfig';
 
-const connection = ADODB.open('Provider=vfpoledb.1;Data Source=d:\\arca\\arca\\arca_italia\\ditte\\krona\\private.dbc;Collating Sequence=Machine');
+const connection = ADODB.open(storedConfig.connectionString);
 
 export class ArticleController {
 
