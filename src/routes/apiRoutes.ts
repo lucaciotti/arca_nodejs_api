@@ -4,12 +4,16 @@ import { isEmpty } from "lodash";
 import { ArticleController } from '../controllers/articleController';
 import { DocsController } from './../controllers/docsController';
 import { GiacController } from './../controllers/giacController';
+import { MagController } from './../controllers/magController';
+import { InventController } from './../controllers/inventController';
 
 export class Routes {
 
     public articleController: ArticleController = new ArticleController();
     public docsController: DocsController = new DocsController();
     public giacController: GiacController = new GiacController();
+    public magController: MagController = new MagController();
+    public inventController: InventController = new InventController();
 
     public router: Router;
 
@@ -58,6 +62,25 @@ export class Routes {
             .get(this.giacController.getGiacMag);
         this.router.route('/giacArtLot/:codmag/:codart/:codlot?')
             .get(this.giacController.getGiacArtLot);
+
+        //ROUTE FOR MAGANA
+        this.router.route('/magana/:codmag')
+            .get(this.magController.getMaga);
+        this.router.route('/magana/right/:codmag')
+            .get(this.magController.getRightMaga);
+
+        //ROUTE FOR INVENT
+        this.router.route('/invent/getCoupon/:coupon')
+            .get(this.inventController.getCoupon);
+        this.router.route('/invent/getAllCoupons/:esercizio/:codmag/:codart?')
+            .get(this.inventController.getAllCoupons);
+        this.router.route('/invent/insertCoupon')
+            .post(this.inventController.insertCoupon);
+        this.router.route('/invent/markWarnCoupon/:coupon')
+            .put(this.inventController.markWarnCoupon);
+        this.router.route('/invent/destroyCoupon/:coupon')
+            .delete(this.inventController.destroyCoupon);
+
 
         // MIDDLEWARE After to use for all requests
         this.router.use(function (req, res, next) {
