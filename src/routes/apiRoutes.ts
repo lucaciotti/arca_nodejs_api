@@ -6,6 +6,8 @@ import { DocsController } from './../controllers/docsController';
 import { GiacController } from './../controllers/giacController';
 import { MagController } from './../controllers/magController';
 import { InventController } from './../controllers/inventController';
+import { AnagrafController } from './../controllers/anagrafController';
+import { PlUtilsController } from './../controllers/plUtilsController';
 
 export class Routes {
 
@@ -14,6 +16,8 @@ export class Routes {
     public giacController: GiacController = new GiacController();
     public magController: MagController = new MagController();
     public inventController: InventController = new InventController();
+    public anagrafController: AnagrafController = new AnagrafController();
+    public plUtilsController: PlUtilsController = new PlUtilsController();
 
     public router: Router;
 
@@ -42,7 +46,13 @@ export class Routes {
             .get(this.articleController.getArtByBarcode);
         this.router.route('/artbarcode2/:barcode')
             .get(this.articleController.getArtByBarcodeAlt);
+        this.router.route('/artubicaz/:codart')
+            .get(this.articleController.getAllUbicaz);
 
+        //ROUTE FOR ANAGRAFICHE
+        this.router.route('/anagraf/:codicecf')
+            .get(this.anagrafController.getAnagraf);
+        
         //ROUTE FOR DOCS
         this.router.route('/doctestipo/:esercizio/:tipodoc/:numerodoc?')
             .get(this.docsController.getDocTesByTipo);
@@ -50,9 +60,9 @@ export class Routes {
             .get(this.docsController.getDocTesByID);
         this.router.route('/docrigtipo/:esercizio/:tipodoc/:numerodoc?')
             .get(this.docsController.getDocRigByTipo);
-        this.router.route('/docrigIDTES/:id')
-            .get(this.docsController.getDocRigByID);
         this.router.route('/docrigID/:id')
+            .get(this.docsController.getDocRigByID);
+        this.router.route('/docrigIDTES/:id')
             .get(this.docsController.getDocRigByIDTes);
 
         //ROUTE FOR GIAC-ART
@@ -68,6 +78,36 @@ export class Routes {
             .get(this.magController.getMaga);
         this.router.route('/magana/right/:codmag')
             .get(this.magController.getRightMaga);
+        
+        //ROUTE FOR PLUTILS!!!
+        this.router.route('/plUtils/getLastCollo/:id')
+            .get(this.plUtilsController.getLastColloPl);
+        this.router.route('/plUtils/getColloByNCollo/:id/:ncollo')
+            .get(this.plUtilsController.getColloPlByNCollo);
+        this.router.route('/plUtils/getColloByTermId/:id/:termid')
+            .get(this.plUtilsController.getColloPlByTermid);
+        this.router.route('/plUtils/insertCollo')
+            .post(this.plUtilsController.insertColloPl);
+        this.router.route('/plUtils/chiudiCollo')
+            .put(this.plUtilsController.chiudiColloPl);
+        this.router.route('/plUtils/getLastBanc/:id')
+            .get(this.plUtilsController.getLastBancPl);
+        this.router.route('/plUtils/getBancByNBanc/:id/:nbanc')
+            .get(this.plUtilsController.getBancPlByNBanc);
+        this.router.route('/plUtils/getBancByReparto/:id/:reparto')
+            .get(this.plUtilsController.getBancPlByReparto);
+        this.router.route('/plUtils/insertBanc')
+            .post(this.plUtilsController.insertBancPl);
+        this.router.route('/plUtils/chiudiBanc')
+            .put(this.plUtilsController.chiudiBancPl);
+        this.router.route('/plUtils/insertPlMod')
+            .post(this.plUtilsController.insertPlMod);
+        this.router.route('/plUtils/insertOcMod')
+            .post(this.plUtilsController.insertPlOcMod);
+        this.router.route('/plUtils/insertEtich')
+            .post(this.plUtilsController.insertEtichPl);
+        this.router.route('/plUtils/updateQtaResPl')
+            .put(this.plUtilsController.updateQtaRePl);
 
         //ROUTE FOR INVENT
         this.router.route('/invent/getCoupon/:coupon')

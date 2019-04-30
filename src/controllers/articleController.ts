@@ -80,4 +80,34 @@ export class ArticleController {
             });
     }
 
+    getAllUbicaz(req: Request, res: Response) {
+        let codart: String = req.params.codart;
+
+        let columnString: String = req.query.col;
+        if (!columnString) {
+            columnString = 'u_ubicaz.*'
+        }
+
+        connection
+            .query('SELECT ' + columnString + ', ubicaz.descrizion as DescrUbi FROM u_ubicaz LEFT JOIN ubicaz on ALLTRIM(ubicaz.codice)==ALLTRIM(u_ubicaz.ubicazione) WHERE ALLTRIM(codicearti)=="' + codart + '"')
+            .then(data => {
+                // console.log(JSON.stringify(data, null, 2));
+                res.json({ success: data });
+            })
+            .catch(error => {
+                console.log(error);
+                res.status(503).json({ errMessage: error });
+            });
+    }
+
+    // ------------------------------------------------
+
+    updateDefaultUbicaz(req: Request, res: Response) {
+        // TODO
+    }
+
+    insertUbicaz(req: Request, res: Response) {
+        // TODO
+    }
+
 }
