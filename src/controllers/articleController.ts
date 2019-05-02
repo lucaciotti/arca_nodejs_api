@@ -100,6 +100,82 @@ export class ArticleController {
             });
     }
 
+    getLotti(req: Request, res: Response) {
+        let codart: String = req.params.codart;
+        let codLot: String = req.params.codLot;
+
+        let columnString: String = req.query.col;
+        if (!columnString) {
+            columnString = '*'
+        }
+
+        let whereString = ' ALLTRIM(codicearti)==' + codart + ' AND !EMPTY(codice) ';
+        if(codLot){
+            whereString = ' AND ALLTRIM(codice)==' + codLot;
+        }
+
+        connection
+            .query('SELECT ' + columnString + ' FROM lotti WHERE ' + whereString)
+            .then(data => {
+                // console.log(JSON.stringify(data, null, 2));
+                res.json({ success: data });
+            })
+            .catch(error => {
+                console.log(error);
+                res.status(503).json({ errMessage: error });
+            });
+    }
+
+    getImballi(req: Request, res: Response) {
+        let codart: String = req.params.codart;
+
+        let columnString: String = req.query.col;
+        if (!columnString) {
+            columnString = '*'
+        }
+
+        let whereString = ' ';
+        if (codart) {
+            whereString = ' WHERE ALLTRIM(codice)==' + codart;
+        }
+
+        connection
+            .query('SELECT ' + columnString + ' FROM u_imballi ' + whereString)
+            .then(data => {
+                // console.log(JSON.stringify(data, null, 2));
+                res.json({ success: data });
+            })
+            .catch(error => {
+                console.log(error);
+                res.status(503).json({ errMessage: error });
+            });
+    }
+
+    getPallet(req: Request, res: Response) {
+        let codart: String = req.params.codart;
+
+        let columnString: String = req.query.col;
+        if (!columnString) {
+            columnString = '*'
+        }
+
+        let whereString = ' ';
+        if (codart) {
+            whereString = ' WHERE ALLTRIM(codice)==' + codart;
+        }
+
+        connection
+            .query('SELECT ' + columnString + ' FROM u_pallet ' + whereString)
+            .then(data => {
+                // console.log(JSON.stringify(data, null, 2));
+                res.json({ success: data });
+            })
+            .catch(error => {
+                console.log(error);
+                res.status(503).json({ errMessage: error });
+            });
+    }
+
     // ------------------------------------------------
 
     updateDefaultUbicaz(req: Request, res: Response) {

@@ -95,16 +95,19 @@ export class GiacController {
         let onlyGiac: String = req.query.onlygiac;
 
         if (!columnString) {
-            columnString = 'maggiac.*';
+            columnString = 'maggiacl.*';
         }
-        columnString = columnString + ', (progqtacar+progqtaret-progqtasca) as esistenza';
+        columnString = columnString + ', (progqtacar+progqtaret-progqtasca) as esistenza, lotti.u_noce, lotti.u_noindus, lotti.u_cli';
+
+        let fromString = ' maggiac ' +
+            'INNER JOIN lotti on ALLTRIM(lotti.codice)==ALLTRIM(maggiacl.lotto) AND ALLTRIM(lotti.codicearti)==ALLTRIM(maggiacl.articolo) ';
 
         let whereString: String = 'ALLTRIM(magazzino)="' + codmag + '" AND ALLTRIM(articolo)="' + codart + '"';
         if (codlot) whereString = whereString + ' AND ALLTRIM(lotto)="' + codlot + '"';
         if (onlyGiac) whereString = whereString + ' AND (progqtacar+progqtaret-progqtasca)<>0';
 
         connection
-            .query('SELECT ' + columnString + ' FROM maggiacl WHERE ' + whereString + 'ORDER BY lotto')
+            .query('SELECT ' + columnString + ' FROM ' + fromString + ' WHERE ' + whereString + 'ORDER BY lotto')
             .then(data => {
                 // console.log(JSON.stringify(data, null, 2));
                 res.json({ success: data});

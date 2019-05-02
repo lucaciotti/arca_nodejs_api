@@ -48,10 +48,18 @@ export class Routes {
             .get(this.articleController.getArtByBarcodeAlt);
         this.router.route('/artubicaz/:codart')
             .get(this.articleController.getAllUbicaz);
+        this.router.route('/artLot/:codart/:codLot?')
+            .get(this.articleController.getLotti);
+        this.router.route('/artImballi/:codart?')
+            .get(this.articleController.getImballi);
+        this.router.route('/artPallet/:codart?')
+            .get(this.articleController.getPallet);
 
         //ROUTE FOR ANAGRAFICHE
         this.router.route('/anagraf/:codicecf')
             .get(this.anagrafController.getAnagraf);
+        this.router.route('/anagraf/getSetInd/:codSettore?')
+            .get(this.anagrafController.getSetInd);
         
         //ROUTE FOR DOCS
         this.router.route('/doctestipo/:esercizio/:tipodoc/:numerodoc?')

@@ -26,4 +26,29 @@ export class AnagrafController {
             });
     }
 
+    getSetInd(req: Request, res: Response) {
+        let codSettore: String = req.params.codSettore;
+
+        let columnString: String = req.query.col;
+        if (!columnString) {
+            columnString = '*'
+        }
+
+        let whereString = ' ';
+        if (codSettore) {
+            whereString = ' WHERE ALLTRIM(settcod)==' + codSettore;
+        }
+
+        connection
+            .query('SELECT ' + columnString + ' FROM u_settind ' + whereString )
+            .then(data => {
+                // console.log(JSON.stringify(data, null, 2));
+                res.json({ success: data });
+            })
+            .catch(error => {
+                console.log(error);
+                res.status(503).json({ errMessage: error });
+            });
+    }
+
 }
