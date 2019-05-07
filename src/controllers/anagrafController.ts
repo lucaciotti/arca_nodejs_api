@@ -36,7 +36,7 @@ export class AnagrafController {
 
         let whereString = ' ';
         if (codSettore) {
-            whereString = ' WHERE ALLTRIM(settcod)==' + codSettore;
+            whereString = ' WHERE ALLTRIM(settcod)=="' + codSettore +'"';
         }
 
         connection

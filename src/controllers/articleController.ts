@@ -102,17 +102,18 @@ export class ArticleController {
 
     getLotti(req: Request, res: Response) {
         let codart: String = req.params.codart;
-        let codLot: String = req.params.codLot;
+        let codLot: String = req.params.codlot;
 
         let columnString: String = req.query.col;
         if (!columnString) {
             columnString = '*'
         }
 
-        let whereString = ' ALLTRIM(codicearti)==' + codart + ' AND !EMPTY(codice) ';
+        let whereString = ' ALLTRIM(codicearti)=="' + codart + '" AND !EMPTY(codice)';
         if(codLot){
-            whereString = ' AND ALLTRIM(codice)==' + codLot;
+            whereString = ' AND ALLTRIM(codice)=="' + codLot + '"';
         }
+        console.log('SELECT ' + columnString + ' FROM lotti WHERE ' + whereString);
 
         connection
             .query('SELECT ' + columnString + ' FROM lotti WHERE ' + whereString)
@@ -136,7 +137,7 @@ export class ArticleController {
 
         let whereString = ' ';
         if (codart) {
-            whereString = ' WHERE ALLTRIM(codice)==' + codart;
+            whereString = ' WHERE ALLTRIM(codice)=="' + codart + '"';
         }
 
         connection
@@ -161,7 +162,7 @@ export class ArticleController {
 
         let whereString = ' ';
         if (codart) {
-            whereString = ' WHERE ALLTRIM(codice)==' + codart;
+            whereString = ' WHERE ALLTRIM(codice)=="' + codart + '"';
         }
 
         connection

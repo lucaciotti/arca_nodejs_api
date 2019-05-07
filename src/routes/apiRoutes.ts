@@ -48,7 +48,7 @@ export class Routes {
             .get(this.articleController.getArtByBarcodeAlt);
         this.router.route('/artubicaz/:codart')
             .get(this.articleController.getAllUbicaz);
-        this.router.route('/artLot/:codart/:codLot?')
+        this.router.route('/artLot/:codart/:codlot?')
             .get(this.articleController.getLotti);
         this.router.route('/artImballi/:codart?')
             .get(this.articleController.getImballi);
