@@ -47,4 +47,28 @@ export class MagController {
             });
     }
 
+    getReparti(req: Request, res: Response) {
+        let codRep: String = req.params.codrep;
+
+        let columnString: String = req.query.col;
+        if (!columnString) {
+            columnString = '*'
+        }
+        let whereString = '';
+        if(codRep){
+            whereString = 'WHERE ALLTRIM(codice) == "' + codRep + '"';
+        }
+
+        connection
+            .query('SELECT ' + columnString + ' FROM u_reparti '+ whereString)
+            .then(data => {
+                // console.log(JSON.stringify(data, null, 2));
+                res.json({ success: data });
+            })
+            .catch(error => {
+                console.log(error);
+                res.status(503).json({ errMessage: error });
+            });
+    }
+
 }

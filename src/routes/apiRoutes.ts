@@ -66,12 +66,16 @@ export class Routes {
             .get(this.docsController.getDocTesByTipo);
         this.router.route('/doctesID/:id')
             .get(this.docsController.getDocTesByID);
+        this.router.route('/doctesRifID/:id')
+            .get(this.docsController.getDocTesByRifIDTes);
         this.router.route('/docrigtipo/:esercizio/:tipodoc/:numerodoc?')
             .get(this.docsController.getDocRigByTipo);
         this.router.route('/docrigID/:id')
             .get(this.docsController.getDocRigByID);
         this.router.route('/docrigIDTES/:id')
             .get(this.docsController.getDocRigByIDTes);
+        this.router.route('/docrigRifID/:id')
+            .get(this.docsController.getDocRigByRifID);
 
         //ROUTE FOR GIAC-ART
         this.router.route('/giacArt/:esercizio/:codart/:codmag?')
@@ -86,6 +90,8 @@ export class Routes {
             .get(this.magController.getMaga);
         this.router.route('/magana/right/:codmag')
             .get(this.magController.getRightMaga);
+        this.router.route('/reparti/:codrep?')
+            .get(this.magController.getReparti);
         
         //ROUTE FOR PLUTILS!!!
         this.router.route('/plUtils/getLastCollo/:id')
@@ -116,6 +122,10 @@ export class Routes {
             .post(this.plUtilsController.insertEtichPl);
         this.router.route('/plUtils/updateQtaResPl')
             .put(this.plUtilsController.updateQtaRePl);
+        this.router.route('/plUtils/getPlMod/:id/:ncollo/:nbanc?')
+            .get(this.plUtilsController.getPlMod);
+        this.router.route('/plUtils/getPBRows/:id/:ncollo/:nbanc?')
+            .get(this.plUtilsController.getPBRows);
 
         //ROUTE FOR INVENT
         this.router.route('/invent/getCoupon/:coupon')

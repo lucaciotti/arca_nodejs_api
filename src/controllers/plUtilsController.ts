@@ -240,6 +240,41 @@ export class PlUtilsController {
             });
     }
 
+    getPlMod(req: Request, res: Response) {
+        let idPlRow: Number = req.params.id;
+        let nCollo: Number = req.params.ncollo;
+        let nBanc: Number = req.params.nbanc;
+
+        let table: String = 'u_plmod ' +
+                    'LEFT JOIN docrig ON docrig.id==u_plmod.id ' +
+                    'LEFT JOIN magart ON ALLTRIM(magart.codice)==ALLTRIM(IIF(EMPTY(u_plmod.articolo), docrig.codicearti, u_plmod.articolo)) ';
+
+        let columnString: String = req.query.col;
+        if (!columnString) {
+            columnString = 'IIF(EMPTY(u_plmod.articolo), docrig.codicearti, u_plmod.articolo) as codicearti, ' +
+                'u_plmod.quantita, u_plmod.collo, u_plmod.bancale, u_plmod.unmisura, u_plmod.fatt, magart.pesounit, u_plmod.peso as pesolordo, magart.danger as imballo ';
+        }
+
+        let whereString: String = '';
+        if (nCollo != -1) {
+            whereString = ' AND u_plmod.collo==' + nCollo;
+        }
+        if (nBanc) {
+            whereString = ' AND u_plmod.bancale==' + nBanc;
+        }
+
+        connection
+            .query('Select ' + columnString + ' FROM ' + table + ' WHERE u_plmod.id==' + idPlRow + whereString)
+            .then(data => {
+                // console.log(JSON.stringify(data, null, 2));
+                res.json({ success: data });
+            })
+            .catch(error => {
+                console.log(error);
+                res.status(503).json({ errMessage: error });
+            });
+    }
+
     insertPlOcMod(req: Request, res: Response) {
         let id: Number = parseFloat(req.get('rfr')); // Rif From Rig
         let qta: Number = req.get('qta') ? parseFloat(req.get('qta')) : 0;
@@ -299,6 +334,41 @@ export class PlUtilsController {
 
         connection
             .execute('UPDATE ' + table + ' SET quantitare = ' + qta + ' WHERE id==' + idRowPl + ' AND tipodoc=="PL"')
+            .then(data => {
+                // console.log(JSON.stringify(data, null, 2));
+                res.json({ success: data });
+            })
+            .catch(error => {
+                console.log(error);
+                res.status(503).json({ errMessage: error });
+            });
+    }
+
+    //PreBolla
+    getPBRows(req: Request, res: Response) {
+        let idPB: Number = req.params.id;
+        let nCollo: Number = req.params.ncollo;
+        let nBanc: Number = req.params.nbanc;
+
+        let table: String = 'docrig ' +
+            'LEFT JOIN magart ON ALLTRIM(magart.codice)==ALLTRIM(docrig.codicearti) ';
+
+        let columnString: String = req.query.col;
+        if (!columnString) {
+            columnString = 'docrig.codicearti, docrig.quantita, docrig.unmisura, docrig.u_costk as collo, ' +
+                    'docrig.u_costk1 as bancale, docrig.unmisura, docrig.fatt, magart.pesounit, docrig.prezzoacq as pesolordo, magart.danger as imballo ';
+        }
+
+        let whereString: String = '';
+        if(nCollo!=-1){
+            whereString = ' AND docrig.u_costk==' + nCollo;
+        }
+        if (nBanc) {
+            whereString = ' AND docrig.u_costk1==' + nBanc;
+        }
+
+        connection
+            .query('SELECT ' + columnString + ' FROM ' + table + ' WHERE id_testa=' + idPB + whereString)
             .then(data => {
                 // console.log(JSON.stringify(data, null, 2));
                 res.json({ success: data });

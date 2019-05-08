@@ -51,6 +51,26 @@ export class DocsController {
             });
     }
 
+    getDocTesByRifIDTes(req: Request, res: Response) {
+        let id: String = req.params.id;
+
+        let columnString: String = req.query.col;
+        if (!columnString) {
+            columnString = '*'
+        }
+
+        connection
+            .query('SELECT ' + columnString + ' FROM doctes WHERE riffromt=' + id)
+            .then(data => {
+                // console.log(JSON.stringify(data, null, 2));
+                res.json({ success: data });
+            })
+            .catch(error => {
+                console.log(error);
+                res.status(503).json({ errMessage: error });
+            });
+    }
+
     getDocRigByTipo(req: Request, res: Response) {
         let esercizio: String = req.params.esercizio;
         let tipodoc: String = req.params.tipodoc;
@@ -116,6 +136,25 @@ export class DocsController {
             });
     }
 
+    getDocRigByRifID(req: Request, res: Response) {
+        let id: String = req.params.id;
+
+        let columnString: String = req.query.col;
+        if (!columnString) {
+            columnString = '*'
+        }
+
+        connection
+            .query('SELECT ' + columnString + ' FROM docrig WHERE riffromr=' + id)
+            .then(data => {
+                // console.log(JSON.stringify(data, null, 2));
+                res.json({ success: data });
+            })
+            .catch(error => {
+                console.log(error);
+                res.status(503).json({ errMessage: error });
+            });
+    }
    
 
 }
