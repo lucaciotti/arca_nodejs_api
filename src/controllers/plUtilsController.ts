@@ -205,6 +205,55 @@ export class PlUtilsController {
             });
     }
 
+    updBancToColloInPB(req: Request, res: Response){
+        let idRifTesPl: Number = parseFloat(req.get('riffromt'));
+        let idTesPB: Number = parseFloat(req.get('idTesPB'));
+        let nCollo: Number = parseFloat(req.get('collo'));
+        let nBanc: Number = parseFloat(req.get('banc'));
+
+        let table: String = 'docrig';
+        let whereString: String = ' WHERE ';
+        if(idTesPB){
+            whereString += ' id_testa==' + idTesPB ;
+        } else if(idRifTesPl){
+            whereString += ' riffromt==' + idRifTesPl;
+        }
+        whereString += ' AND u_costk==' + nCollo;
+
+        console.log('UPDATE ' + table + ' SET u_costk1 = ' + nBanc + whereString );
+
+        connection
+            .execute('UPDATE ' + table + ' SET u_costk1 = ' + nBanc + whereString )
+            .then(data => {
+                // console.log(JSON.stringify(data, null, 2));
+                res.json({ success: data });
+            })
+            .catch(error => {
+                console.log(error);
+                res.status(503).json({ errMessage: error });
+            });
+    }
+
+    updBancToColloInPlMod(req: Request, res: Response) {
+        let idRowPl: Number = parseFloat(req.get('idRowPl'));
+        let nCollo: Number = parseFloat(req.get('collo'));
+        let nBanc: Number = parseFloat(req.get('banc'));
+
+        let table: String = 'u_plmod';
+        console.log('UPDATE ' + table + ' SET bancale = ' + nBanc + ' WHERE id==' + idRowPl + ' AND collo==' + nCollo);
+
+        connection
+            .execute('UPDATE ' + table + ' SET bancale = ' + nBanc + ' WHERE id==' + idRowPl + ' AND collo==' + nCollo)
+            .then(data => {
+                // console.log(JSON.stringify(data, null, 2));
+                res.json({ success: data });
+            })
+            .catch(error => {
+                console.log(error);
+                res.status(503).json({ errMessage: error });
+            });
+    }
+
     // PLMOD + OCMOD
     insertPlMod(req: Request, res: Response) {
         let id: Number = parseFloat(req.get('id'));

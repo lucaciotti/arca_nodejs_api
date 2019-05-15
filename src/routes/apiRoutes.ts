@@ -126,6 +126,10 @@ export class Routes {
             .get(this.plUtilsController.getPlMod);
         this.router.route('/plUtils/getPBRows/:id/:ncollo/:nbanc?')
             .get(this.plUtilsController.getPBRows);
+        this.router.route('/plUtils/updBancToColloInPB')
+            .put(this.plUtilsController.updBancToColloInPB);
+        this.router.route('/plUtils/updBancToColloInPlMod')
+            .put(this.plUtilsController.updBancToColloInPlMod);
 
         //ROUTE FOR INVENT
         this.router.route('/invent/getCoupon/:coupon')
