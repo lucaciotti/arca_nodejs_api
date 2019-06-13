@@ -11,7 +11,7 @@ export class AnagrafController {
 
         let columnString: String = req.query.col;
         if (!columnString) {
-            columnString = '*'
+            columnString = '*';
         }
 
         connection
@@ -31,7 +31,7 @@ export class AnagrafController {
 
         let columnString: String = req.query.col;
         if (!columnString) {
-            columnString = '*'
+            columnString = '*';
         }
 
         let whereString = ' ';

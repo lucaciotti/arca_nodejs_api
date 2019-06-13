@@ -11,7 +11,7 @@ export class InventController {
 
         let columnString: String = req.query.col;
         if (!columnString) {
-            columnString = '*'
+            columnString = '*';
         }
 
         connection
@@ -33,7 +33,7 @@ export class InventController {
 
         let columnString: String = req.query.col;
         if (!columnString) {
-            columnString = '*'
+            columnString = '*';
         }
         let orderby: String = req.query.orderby;
         if (!orderby) {

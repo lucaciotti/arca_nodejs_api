@@ -13,7 +13,7 @@ export class DocsController {
 
         let columnString: String = req.query.col;
         if(!columnString){
-            columnString = '*'
+            columnString = '*';
         }
 
         let whereString: String = 'esercizio="'+esercizio+'" AND tipodoc="'+tipodoc+'" ';
@@ -36,7 +36,7 @@ export class DocsController {
 
         let columnString: String = req.query.col;
         if (!columnString) {
-            columnString = '*'
+            columnString = '*';
         }
 
         connection
@@ -56,11 +56,12 @@ export class DocsController {
 
         let columnString: String = req.query.col;
         if (!columnString) {
-            columnString = '*'
+            columnString = '*';
         }
+        // FORZO COLUMNSTRING - o così o niente
 
         connection
-            .query('SELECT ' + columnString + ' FROM doctes WHERE riffromt=' + id)
+            .query('SELECT id_testa as id, MAX(tipodoc) as tipodoc FROM docrig WHERE riffromt=' + id + ' GROUP BY id_testa')
             .then(data => {
                 // console.log(JSON.stringify(data, null, 2));
                 res.json({ success: data });
@@ -78,7 +79,7 @@ export class DocsController {
 
         let columnString: String = req.query.col;
         if (!columnString) {
-            columnString = '*'
+            columnString = '*';
         }
 
         let whereString: String = 'esercizio="' + esercizio + '" AND tipodoc="' + tipodoc + '" ';
@@ -101,7 +102,7 @@ export class DocsController {
 
         let columnString: String = req.query.col;
         if (!columnString) {
-            columnString = '*'
+            columnString = '*';
         }
 
         connection
@@ -121,7 +122,7 @@ export class DocsController {
 
         let columnString: String = req.query.col;
         if (!columnString) {
-            columnString = '*'
+            columnString = '*';
         }
 
         connection
@@ -141,7 +142,7 @@ export class DocsController {
 
         let columnString: String = req.query.col;
         if (!columnString) {
-            columnString = '*'
+            columnString = '*';
         }
 
         connection

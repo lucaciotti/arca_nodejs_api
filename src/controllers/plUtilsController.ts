@@ -12,7 +12,7 @@ export class PlUtilsController {
 
         let columnString: String = req.query.col;
         if (!columnString) {
-            columnString = '*'
+            columnString = '*';
         }
 
         connection
@@ -33,7 +33,7 @@ export class PlUtilsController {
 
         let columnString: String = req.query.col;
         if (!columnString) {
-            columnString = '*'
+            columnString = '*';
         }
 
         connection
@@ -112,7 +112,7 @@ export class PlUtilsController {
 
         let columnString: String = req.query.col;
         if (!columnString) {
-            columnString = '*'
+            columnString = '*';
         }
 
         connection
@@ -133,7 +133,7 @@ export class PlUtilsController {
 
         let columnString: String = req.query.col;
         if (!columnString) {
-            columnString = '*'
+            columnString = '*';
         }
 
         connection
@@ -358,7 +358,7 @@ export class PlUtilsController {
 
         let table: String = 'u_etichpl';
         let columns: String = 'id_doc, collo, printer, artcollo, descollo, extracollo, warnpeso';
-        let values: String = id + ', ' + nCollo + ', "' + prtname + ', "' + artcollo + '", "' + desccollo + '", ' + extracollo + ', ' + warnpeso;
+        let values: String = id + ', ' + nCollo + ', "' + prtname + '", "' + artcollo + '", "' + desccollo + '", ' + extracollo + ', ' + warnpeso;
         console.log('INSERT INTO ' + table + ' (' + columns + ') VALUES (' + values + ') ');
 
         connection
@@ -403,8 +403,9 @@ export class PlUtilsController {
             'LEFT JOIN magart ON ALLTRIM(magart.codice)==ALLTRIM(docrig.codicearti) ';
 
         let columnString: String = req.query.col;
+        let onlyCollo: String = req.query.onlyCollo;
         if (!columnString) {
-            columnString = 'docrig.codicearti, docrig.quantita, docrig.unmisura, docrig.u_costk as collo, ' +
+            columnString = 'docrig.codicearti, docrig.quantita, docrig.unmisura, docrig.u_costk as collo, docrig.rifcer as reparto,' +
                     'docrig.u_costk1 as bancale, docrig.unmisura, docrig.fatt, magart.pesounit, docrig.prezzoacq as pesolordo, magart.danger as imballo ';
         }
 
@@ -415,9 +416,56 @@ export class PlUtilsController {
         if (nBanc) {
             whereString = ' AND docrig.u_costk1==' + nBanc;
         }
+        if(onlyCollo){
+            whereString = ' AND docrig.u_costk!=0';
+        }
 
         connection
             .query('SELECT ' + columnString + ' FROM ' + table + ' WHERE id_testa=' + idPB + whereString)
+            .then(data => {
+                // console.log(JSON.stringify(data, null, 2));
+                res.json({ success: data });
+            })
+            .catch(error => {
+                console.log(error);
+                res.status(503).json({ errMessage: error });
+            });
+    }
+
+    getListColliPB(req: Request, res: Response) {
+        let idPB: Number = req.params.id;
+
+        let table: String = 'docrig ';
+
+        let columnString: String = req.query.col;
+        if (!columnString) {
+            columnString = 'docrig.u_costk as collo, docrig.rifcer as reparto';
+        }
+
+        connection
+            .query('SELECT ' + columnString + ' FROM ' + table + ' WHERE id_testa=' + idPB + ' AND u_costk!=0 GROUP BY rifcer, u_costk ORDER BY rifcer, u_costk')
+            .then(data => {
+                // console.log(JSON.stringify(data, null, 2));
+                res.json({ success: data });
+            })
+            .catch(error => {
+                console.log(error);
+                res.status(503).json({ errMessage: error });
+            });
+    }
+
+    getListBancPB(req: Request, res: Response) {
+        let idPB: Number = req.params.id;
+
+        let table: String = 'docrig ';
+
+        let columnString: String = req.query.col;
+        if (!columnString) {
+            columnString = 'docrig.u_costk1 as banc, docrig.rifcer as reparto';
+        }
+
+        connection
+            .query('SELECT ' + columnString + ' FROM ' + table + ' WHERE id_testa=' + idPB + ' AND u_costk1!=0 GROUP BY rifcer, u_costk1 ORDER BY rifcer, u_costk1')
             .then(data => {
                 // console.log(JSON.stringify(data, null, 2));
                 res.json({ success: data });

@@ -4,6 +4,7 @@ import * as morgan from "morgan";
 import * as bodyParser from "body-parser";
 import * as path from 'path';
 import rfs from 'rotating-file-stream';
+// import * as fs from 'fs';
 
 class App {
 
@@ -13,7 +14,8 @@ class App {
     public accessLogStream = rfs('access.log', {
         interval: '1d', // rotate daily
         path: path.join(process.cwd(), 'log')
-    })
+    });
+    // fs.createWriteStream('./access.log', { flags: 'a' });
 
     constructor() {
         this.app = express();
@@ -32,6 +34,7 @@ class App {
             ':remote-addr - :remote-user [:date[clf]] ":method :url HTTP/:http-version" :status :response-time ms :res[content-length] ":referrer" ":user-agent"',
             { stream: this.accessLogStream }
             ));
+        this.app.use(morgan('dev'));
         this.app.use('/api/v1', this.router);
     }
 

@@ -11,7 +11,7 @@ export class ArticleController {
 
         let columnString: String = req.query.col;
         if (!columnString) {
-            columnString = '*'
+            columnString = '*';
         }
 
         connection
@@ -106,7 +106,7 @@ export class ArticleController {
 
         let columnString: String = req.query.col;
         if (!columnString) {
-            columnString = '*'
+            columnString = '*';
         }
 
         let whereString = ' ALLTRIM(codicearti)=="' + codart + '" AND !EMPTY(codice)';
@@ -132,7 +132,7 @@ export class ArticleController {
 
         let columnString: String = req.query.col;
         if (!columnString) {
-            columnString = '*'
+            columnString = '*';
         }
 
         let whereString = ' ';
@@ -157,7 +157,7 @@ export class ArticleController {
 
         let columnString: String = req.query.col;
         if (!columnString) {
-            columnString = '*'
+            columnString = '*';
         }
 
         let whereString = ' ';

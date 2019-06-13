@@ -8,6 +8,7 @@ import { MagController } from './../controllers/magController';
 import { InventController } from './../controllers/inventController';
 import { AnagrafController } from './../controllers/anagrafController';
 import { PlUtilsController } from './../controllers/plUtilsController';
+import { genericQueryController } from './../controllers/genericQueryController';
 
 export class Routes {
 
@@ -18,6 +19,7 @@ export class Routes {
     public inventController: InventController = new InventController();
     public anagrafController: AnagrafController = new AnagrafController();
     public plUtilsController: PlUtilsController = new PlUtilsController();
+    public genericQueryController: genericQueryController = new genericQueryController();
 
     public router: Router;
 
@@ -130,6 +132,10 @@ export class Routes {
             .put(this.plUtilsController.updBancToColloInPB);
         this.router.route('/plUtils/updBancToColloInPlMod')
             .put(this.plUtilsController.updBancToColloInPlMod);
+        this.router.route('/plUtils/getListColliPB/:id')
+            .get(this.plUtilsController.getListColliPB);
+        this.router.route('/plUtils/getListBancPB/:id')
+            .get(this.plUtilsController.getListBancPB);
 
         //ROUTE FOR INVENT
         this.router.route('/invent/getCoupon/:coupon')
@@ -143,6 +149,9 @@ export class Routes {
         this.router.route('/invent/destroyCoupon/:coupon')
             .delete(this.inventController.destroyCoupon);
 
+        //ROUTE FOR GENERIC QUERY
+        this.router.route('/genericQuery')
+            .post(this.genericQueryController.getSelectQuery)
 
         // MIDDLEWARE After to use for all requests
         this.router.use(function (req, res, next) {
