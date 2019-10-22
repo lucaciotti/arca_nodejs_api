@@ -170,7 +170,7 @@ export class PlUtilsController {
 
         let table: String = 'u_bancpl';
         let columns: String = 'reparto, id_pl, bancale';
-        let values: String = '' + reparto + ', ' + idPl + ', ' + nBanc + '';
+        let values: String = '"' + reparto + '", ' + idPl + ', ' + nBanc + '';
         console.log('INSERT INTO ' + table + ' (' + columns + ') VALUES (' + values + ') ');
 
         connection
@@ -191,10 +191,10 @@ export class PlUtilsController {
         let reparto: String = req.get('reparto');
 
         let table: String = 'u_bancpl';
-        console.log('UPDATE ' + table + ' SET reparto = "@"' + reparto + ' WHERE id_pl==' + idPl + ' AND bancale==' + nBanc);
+        console.log('UPDATE ' + table + ' SET reparto = "@' + reparto + '" WHERE id_pl==' + idPl + ' AND bancale==' + nBanc);
 
         connection
-            .execute('UPDATE ' + table + ' SET reparto = "@"' + reparto + ' WHERE id_pl==' + idPl + ' AND bancale==' + nBanc)
+            .execute('UPDATE ' + table + ' SET reparto = "@' + reparto + '" WHERE id_pl==' + idPl + ' AND bancale==' + nBanc)
             .then(data => {
                 // console.log(JSON.stringify(data, null, 2));
                 res.json({ success: data });
