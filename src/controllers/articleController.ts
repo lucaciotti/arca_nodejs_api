@@ -157,7 +157,7 @@ export class ArticleController {
 
         let columnString: String = req.query.col;
         if (!columnString) {
-            columnString = '*';
+            columnString = 'u_pallet.*, magart.descrizion ';
         }
 
         let whereString = ' ';
@@ -166,7 +166,7 @@ export class ArticleController {
         }
 
         connection
-            .query('SELECT ' + columnString + ' FROM u_pallet ' + whereString)
+            .query('SELECT ' + columnString + ' FROM u_pallet INNER JOIN magart ON ALLTRIM(magart.codice)==ALLTRIM(u_pallet.codice) ' + whereString)
             .then(data => {
                 // console.log(JSON.stringify(data, null, 2));
                 res.json({ success: data });
