@@ -150,8 +150,21 @@ export class Routes {
             .delete(this.inventController.destroyCoupon);
 
         //ROUTE FOR GENERIC QUERY
-        this.router.route('/genericQuery')
-            .post(this.genericQueryController.getSelectQuery)
+        // this.router.route('/genericQuery')
+        //     .post(this.genericQueryController.getSelectQuery)
+        this.router
+          .route("/selectQuery")
+          .post(this.genericQueryController.getQuery);
+        this.router
+          .route("/insertQuery")
+          .post(this.genericQueryController.getQuery);
+        this.router
+          .route("/updateQuery")
+          .put(this.genericQueryController.getQuery);
+        this.router
+          .route("/deleteQuery")
+          .delete(this.genericQueryController.getQuery);
+
 
         // MIDDLEWARE After to use for all requests
         this.router.use(function (req, res, next) {

@@ -41,4 +41,69 @@ export class genericQueryController {
                 });
         }
     }
+
+    getQuery(req: Request, res: Response) {
+        let queryString: string = req.get('query') ? req.get('query') : '';
+
+        console.log(queryString);
+        connection
+            .query(queryString)
+            .then(data => {
+                // console.log(JSON.stringify(data, null, 2));
+                res.json({ success: data });
+            })
+            .catch(error => {
+                console.log(error);
+                res.status(503).json({ errMessage: error });
+            });
+    }
+
+    execUpdate(req: Request, res: Response) {
+        let queryString: string = req.get('query') ? req.get('query') : '';
+
+        console.log(queryString);
+        connection
+            .execute(queryString)
+            .then(data => {
+                // console.log(JSON.stringify(data, null, 2));
+                res.json({ success: data });
+            })
+            .catch(error => {
+                console.log(error);
+                res.status(503).json({ errMessage: error });
+            });
+    }
+
+    execInsert(req: Request, res: Response) {
+        let queryString: string = req.get('query') ? req.get('query') : '';
+
+        console.log(queryString);
+        connection
+            .execute(queryString)
+            .then(data => {
+                // console.log(JSON.stringify(data, null, 2));
+                res.json({ success: data });
+            })
+            .catch(error => {
+                console.log(error);
+                res.status(503).json({ errMessage: error });
+            });
+    }
+
+
+    execDelete(req: Request, res: Response) {
+        let queryString: string = req.get('query') ? req.get('query') : '';
+
+        console.log(queryString);
+        connection
+            .execute(queryString)
+            .then(data => {
+                // console.log(JSON.stringify(data, null, 2));
+                res.json({ success: data });
+            })
+            .catch(error => {
+                console.log(error);
+                res.status(503).json({ errMessage: error });
+            });
+    }
 }
