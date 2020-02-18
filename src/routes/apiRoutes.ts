@@ -33,7 +33,7 @@ export class Routes {
         this.router.use(function (req, res, next) {
             res.set('Content-Type', 'application/json');
             // do logging
-            console.log('Middleware Before to be implemented.');
+            // console.log('Middleware Before to be implemented.');
             next(); // make sure we go to the next routes and don't stop here
         });
 
@@ -170,7 +170,7 @@ export class Routes {
         this.router.use(function (req, res, next) {
             if(isEmpty(res)) res.json({message: "Empty"})
             // do logging
-            console.log('Middleware After');
+            // console.log('Middleware After');
             next(); // make sure we go to the next routes and don't stop here
         });
     }
