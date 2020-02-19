@@ -157,13 +157,13 @@ export class Routes {
           .post(this.genericQueryController.getQuery);
         this.router
           .route("/insertQuery")
-          .post(this.genericQueryController.getQuery);
+          .put(this.genericQueryController.execInsert);
         this.router
           .route("/updateQuery")
-          .put(this.genericQueryController.getQuery);
+          .put(this.genericQueryController.execUpdate);
         this.router
           .route("/deleteQuery")
-          .delete(this.genericQueryController.getQuery);
+          .delete(this.genericQueryController.execDelete);
 
 
         // MIDDLEWARE After to use for all requests
